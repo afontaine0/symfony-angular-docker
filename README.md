@@ -22,10 +22,10 @@
     docker-compose up -d
     ```
 
-3. The application is now running on [http://localhost:3000](http://localhost:3000)
+3. The Symfony application is now running on [http://localhost:3000](http://localhost:3000) and the Angular application is running on [http://localhost:4200](http://localhost:4200).
 
     > [!NOTE]
-    > You may need to wait a few seconds for the application to start.
+    > You may need to wait a few seconds for the applications to start.
 
 ## What's included
 
@@ -35,6 +35,11 @@ The Symfony application is the official [Symfony Demo](https://github.com/symfon
 In `Dockerfile.symfony` we check out to the last commit at 2024-02-26, to ensure that the application is running on PHP 8.1.
 We also install `composer` and `symfony` CLI tools, the PHP extensions required by the application, and then install the Composer dependencies.
 Then, because we installed Docker, but did not create the alias, we need to run the Symfony command with the full path to the binary (`/root/.symfony5/bin/symfony`). We use the `serve` command to start the application.
+
+### Angular
+
+This is a simple Angular application that we use to demonstrate. The demo application was downloaded from the [Angular website](https://angular.io/). How it works is pretty simple. The Dockerfile is based on the official Node image, we install the dependencies and then start the application with the `npm start` command.
+You can access the application on [http://localhost:4200](http://localhost:4200).
 
 ### MySQL
 

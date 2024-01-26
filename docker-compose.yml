@@ -16,6 +16,18 @@ services:
       - db
     environment:
       DATABASE_URL: mysql://symfony:symfony@db:3306/symfony
+
+  angular:
+    build:
+      context: ./modules/angular
+      dockerfile: ../../dockerfiles/Dockerfile.angular
+    container_name: angular
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./modules/angular:/var/www/html
+    networks:
+      - app-network
   
   db:
     platform: linux/x86_64

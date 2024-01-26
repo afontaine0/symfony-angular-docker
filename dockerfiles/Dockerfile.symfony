@@ -2,12 +2,9 @@ FROM --platform=linux/x86_64 php:8.2-cli
 
 ADD . /app
 WORKDIR /app
-RUN apt update && apt upgrade -y
-RUN apt install git -y
-# Checkout to the last commit at 2024-02-26
-RUN git checkout 5923fcd
 
 # Install Composer
+RUN apt update && apt upgrade -y
 RUN apt install curl -y
 RUN apt install unzip -y
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
