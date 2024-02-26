@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  symfony:
+    build:
+      context: ./modules/symfony
+      dockerfile: ../../dockerfiles/Dockerfile.symfony
+    container_name: symfony
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./modules/symfony:/var/www/html
+    networks:
+      - app-network
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql://symfony:symfony@db:3306/symfony
+  
+  db:
+    platform: linux/x86_64
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_DATABASE: symfony
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: symfony
+      MYSQL_PASSWORD: symfony
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

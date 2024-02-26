@@ -1,0 +1,27 @@
+FROM --platform=linux/x86_64 php:8.2-cli
+
+ADD . /app
+WORKDIR /app
+RUN apt update && apt upgrade -y
+RUN apt install git -y
+# Checkout to the last commit at 2024-02-26
+RUN git checkout 5923fcd
+
+# Install Composer
+RUN apt install curl -y
+RUN apt install unzip -y
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Install Symfony CLI
+RUN curl -sS https://get.symfony.com/cli/installer | bash
+
+# Install PHP extensions
+RUN apt install -y libicu-dev && rm -rf /var/lib/apt/lists/*
+RUN docker-php-ext-install intl
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_PROCESS_TIMEOUT=3600
+RUN composer install
+
+CMD ["/root/.symfony5/bin/symfony", "serve", "--port=3000"]
+
+EXPOSE 3000
